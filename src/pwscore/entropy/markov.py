@@ -31,7 +31,8 @@ END = "$"
 def _load_model() -> dict[str, Any]:
     path = files("pwscore.data") / "markov_rockyou.json"
     with path.open("r", encoding="utf-8") as fh:
-        return json.load(fh)
+        data: dict[str, Any] = json.load(fh)
+    return data
 
 
 def markov_entropy(pw: str) -> float:
@@ -48,10 +49,7 @@ def markov_entropy(pw: str) -> float:
         ctx = seq[i : i + order]
         nxt = seq[i + order]
         ctx_probs = probs.get(ctx)
-        if ctx_probs is None:
-            p = fallback
-        else:
-            p = ctx_probs.get(nxt, fallback)
+        p = fallback if ctx_probs is None else ctx_probs.get(nxt, fallback)
         total_bits += -math.log2(p)
     return total_bits
 

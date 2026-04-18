@@ -10,7 +10,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-from zxcvbn import zxcvbn  # type: ignore[import-untyped]
+from zxcvbn import zxcvbn
 
 
 @dataclass(frozen=True)

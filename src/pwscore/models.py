@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel, Field
 
 
-class Verdict(str, Enum):
+class Verdict(StrEnum):
     weak = "weak"
     fair = "fair"
     strong = "strong"

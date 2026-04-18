@@ -126,8 +126,7 @@ def main() -> None:
         json.dump(out, fh, separators=(",", ":"), ensure_ascii=False)
     size_kb = args.output.stat().st_size / 1024
     print(
-        f"wrote {args.output} ({size_kb:.1f} KB, {len(probs)} contexts, "
-        f"{lines} passwords)",
+        f"wrote {args.output} ({size_kb:.1f} KB, {len(probs)} contexts, {lines} passwords)",
         file=sys.stderr,
     )
 

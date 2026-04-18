@@ -38,9 +38,7 @@ class TestNaiveEntropy:
 
     def test_full_pool_matches_textbook(self) -> None:
         # "Password1!" → L=10, N=94 → 10 * log2(94)
-        assert naive_charset_entropy("Password1!") == pytest.approx(
-            10 * math.log2(94)
-        )
+        assert naive_charset_entropy("Password1!") == pytest.approx(10 * math.log2(94))
 
     def test_rates_notoriously_weak_password_as_strong(self) -> None:
         # This is the point: the formula says "Password1!" has ~65.5 bits,

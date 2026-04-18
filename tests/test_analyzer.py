@@ -3,7 +3,6 @@ import pytest
 from pwscore.analyzer import analyze, analyze_sync
 from pwscore.models import Verdict
 
-
 WEAK = [
     "password",
     "123456",
@@ -39,7 +38,9 @@ async def test_empty_is_weak() -> None:
 @pytest.mark.parametrize("pw", WEAK)
 async def test_weak_passwords_are_weak(pw: str) -> None:
     r = await analyze(pw, skip_hibp=True)
-    assert r.verdict == Verdict.weak, f"{pw!r} should be weak, got {r.verdict} | reasons={r.reasons}"
+    assert r.verdict == Verdict.weak, (
+        f"{pw!r} should be weak, got {r.verdict} | reasons={r.reasons}"
+    )
     assert r.reasons, f"{pw!r} classified weak but no reasons given"
 
 

@@ -41,8 +41,7 @@ def main() -> None:
 
     size_kb = args.output.stat().st_size / 1024
     print(
-        f"wrote {args.output} ({size_kb:.1f} KB, {count} entries, "
-        f"error rate {args.error_rate})",
+        f"wrote {args.output} ({size_kb:.1f} KB, {count} entries, error rate {args.error_rate})",
         file=sys.stderr,
     )
 

@@ -16,7 +16,6 @@ pwscore verdict.
 from __future__ import annotations
 
 import argparse
-import math
 import random
 import statistics
 import sys
@@ -26,10 +25,9 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-from tqdm import tqdm  # noqa: E402
+import matplotlib.pyplot as plt
+from tqdm import tqdm
 
-from pwscore.analyzer import analyze_sync
 from pwscore.checks.patterns import find_patterns
 from pwscore.checks.wordlist import is_common_case_insensitive
 from pwscore.checks.zxcvbn_wrap import run_zxcvbn
@@ -75,7 +73,11 @@ class BenchmarkRow:
 
 
 def _load_attack_set(path: Path, sample: int | None, seed: int) -> list[str]:
-    lines = [ln.rstrip("\r\n") for ln in path.read_text(encoding="utf-8", errors="ignore").splitlines() if ln.strip()]
+    lines = [
+        ln.rstrip("\r\n")
+        for ln in path.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if ln.strip()
+    ]
     if sample and sample < len(lines):
         rng = random.Random(seed)
         return rng.sample(lines, sample)
@@ -97,13 +99,7 @@ def _summary(scores: list[float]) -> str:
 
 
 def _slug(name: str) -> str:
-    return (
-        name.lower()
-        .replace(" ", "_")
-        .replace("(", "")
-        .replace(")", "")
-        .replace(",", "")
-    )
+    return name.lower().replace(" ", "_").replace("(", "").replace(")", "").replace(",", "")
 
 
 def _plot_distributions(rows: list[BenchmarkRow], out_dir: Path) -> None:
@@ -251,9 +247,7 @@ def main() -> None:
         pw for pw in attack if naive_charset_entropy(pw) >= STRONG_CHARSET_CSCI262_BITS
     ][:15]
     if charset_winners:
-        lines.append(
-            "\n## Leaked passwords the original CSCI262 entropy rule calls 'strong'\n"
-        )
+        lines.append("\n## Leaked passwords the original CSCI262 entropy rule calls 'strong'\n")
         lines.append(
             "These are all in the RockYou top-10k and were nonetheless rated "
             f"≥{STRONG_CHARSET_CSCI262_BITS} bits by the textbook `L · log2(N)` formula:\n\n"
@@ -265,7 +259,7 @@ def main() -> None:
     lines.append("\n## How to reproduce\n")
     lines.append(
         "```\n"
-        "pip install -e \".[dev,bench]\"\n"
+        'pip install -e ".[dev,bench]"\n'
         "python benchmarks/train_markov.py --input benchmarks/data/rockyou_top1m.txt \\\n"
         "    --output src/pwscore/data/markov_rockyou.json --order 3 --min-count 25\n"
         "python benchmarks/build_bloom.py --input benchmarks/data/rockyou_top10k.txt \\\n"
@@ -279,7 +273,7 @@ def main() -> None:
     print(f"wrote {args.output}", file=sys.stderr)
 
     # Echo the headline to stdout so CI / users see the numbers at a glance.
-    print("\n" + "".join(lines[2:4 + len(rows) + 1]))
+    print("\n" + "".join(lines[2 : 4 + len(rows) + 1]))
 
 
 if __name__ == "__main__":

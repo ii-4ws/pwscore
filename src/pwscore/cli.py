@@ -53,7 +53,9 @@ def _render(result: AnalysisResult) -> None:
     flags = Table(title="flags", show_header=True, header_style="bold")
     flags.add_column("signal", style="cyan")
     flags.add_column("value")
-    flags.add_row("hibp breach count", f"{result.flags.hibp_count:,}" if result.flags.hibp_pwned else "0")
+    flags.add_row(
+        "hibp breach count", f"{result.flags.hibp_count:,}" if result.flags.hibp_pwned else "0"
+    )
     flags.add_row("in rockyou top-10k", "yes" if result.flags.in_common_wordlist else "no")
     flags.add_row("zxcvbn score", f"{result.flags.zxcvbn_score}/4")
     flags.add_row("zxcvbn crack time", result.flags.zxcvbn_crack_time)

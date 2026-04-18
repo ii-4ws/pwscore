@@ -38,9 +38,7 @@ def _verdict(
     reasons: list[str] = []
 
     if flags.hibp_pwned:
-        reasons.append(
-            f"found in the HaveIBeenPwned breach set ({flags.hibp_count:,} times)"
-        )
+        reasons.append(f"found in the HaveIBeenPwned breach set ({flags.hibp_count:,} times)")
     if flags.in_common_wordlist:
         reasons.append("matches an entry in the RockYou top-10k wordlist")
     reasons.extend(flags.pattern_reasons)
@@ -50,17 +48,12 @@ def _verdict(
             "(easy to guess given breach patterns)"
         )
     if zxcvbn_score < WEAK_ZXCVBN_SCORE:
-        reasons.append(
-            f"zxcvbn score is {zxcvbn_score}/4; {flags.zxcvbn_warning or 'weak'}"
-        )
+        reasons.append(f"zxcvbn score is {zxcvbn_score}/4; {flags.zxcvbn_warning or 'weak'}")
 
     if reasons:
         return Verdict.weak, reasons
 
-    if (
-        markov_bits >= STRONG_MARKOV_BITS
-        and zxcvbn_score >= STRONG_ZXCVBN_SCORE
-    ):
+    if markov_bits >= STRONG_MARKOV_BITS and zxcvbn_score >= STRONG_ZXCVBN_SCORE:
         return Verdict.strong, []
 
     return Verdict.fair, []
