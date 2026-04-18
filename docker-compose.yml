@@ -1,0 +1,11 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: pwscore:dev
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    environment:
+      - PWSCORE_ENV=docker
