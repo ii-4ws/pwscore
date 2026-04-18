@@ -24,4 +24,3 @@ htmlcov/
 node_modules/
 benchmarks/data/rockyou.txt
 benchmarks/data/rockyou_top1m.txt
-benchmarks/results/plots/*.png
